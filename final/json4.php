@@ -4,17 +4,19 @@ require "dbconnect.php";
 $orderNumber = $_POST["orderNumber"];
 $storeID = $_POST["storeID"];
 $productID =$_POST["productID"];
+session_start();
+$userID = $_SESSION['uID'];
 //$nowSum =$_POST["productSum"];
 switch($productID)
 {
     case 1 :
-        $sql="select productStock,productName from headerquarter where headerquarter.productName =(select productName1 from store where store.storeID = $storeID)";
+        $sql="select productStock,productName from headerquarter where headerquarter.productName =(select productName1 from store where store.storeID = $storeID) and headerquarter.userID = '$userID' ";
         break;
     case 2:
-        $sql="select productStock,productName from headerquarter where headerquarter.productName =(select productName2 from store where store.storeID = $storeID)";
+        $sql="select productStock,productName from headerquarter where headerquarter.productName =(select productName2 from store where store.storeID = $storeID) and headerquarter.userID = '$userID' ";
         break;
     case 3 :
-        $sql="select productStock,productName from headerquarter where headerquarter.productName =(select productName3 from store where store.storeID = $storeID)";
+        $sql="select productStock,productName from headerquarter where headerquarter.productName =(select productName3 from store where store.storeID = $storeID) and headerquarter.userID = '$userID' ";
         break;
     default:
 }
@@ -25,7 +27,7 @@ if($row['productStock'] >= $orderNumber)
 {
     //$productStock =  $row['productStock'];
     $productName = $row['productName'];
-    $sql2 = "update headerquarter set productStock = productStock-$orderNumber where productName = '$productName'";
+    $sql2 = "update headerquarter set productStock = productStock-$orderNumber where productName = '$productName' and headerquarter.userID = '$userID' ";
     mysqli_query($conn,$sql2) or die("db error");
     echo"訂購成功";
 }

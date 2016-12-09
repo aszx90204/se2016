@@ -97,9 +97,10 @@ switch($act) {
         {
 			//set login session mark
 			$_SESSION['uID'] = $userID;
-			echo "login OK<br>";
-			echo "<a href='./'>guest Book Home</a>";
-    
+			//echo "login OK<br>";
+			//echo "<a href='./'>guest Book Home</a>";
+            header("Location: factory.php");
+        }
         else
         {
 			//set login mark to empty

@@ -1,8 +1,8 @@
 <?php
 require("dbconnect.php");
-function showStore() {
+function showStore($userID) {
 	global $conn;
-    $sql = "select name,storeID from store";
+    $sql = "select name,storeID from store where userID = '$userID'";
 	return mysqli_query($conn,$sql);
 }
 function showStoreNumber() {

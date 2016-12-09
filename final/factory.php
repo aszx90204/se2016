@@ -1,7 +1,9 @@
 <?php
 require("dbconnect.php");
 require ("find.php");
-$result =showStore(); 
+session_start();
+$userID = $_SESSION['uID'];
+$result =showStore($userID); 
 date_default_timezone_set("Asia/Taipei");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -51,7 +53,7 @@ function checkStock()
         $("#productStock"+i).html(productStock);
     }
 }
-function checkMoney()
+function checkMoney()//已改
 {
     for(var i = 0;i< storeArray.length;i++)
     {
@@ -80,7 +82,7 @@ function checkMoney()
             if(nowSum<0)
             {
                 nowSum = 0;
-                alert("分店"+storeArray[i]['storeID']+"的商品:"+productName+"已售罄,請調貨");
+                //alert("分店"+storeArray[i]['storeID']+"的商品:"+productName+"已售罄,請調貨");
             }
             if(nowSum!=0 && x !=0)
             {
@@ -112,14 +114,11 @@ function checkMoney()
 }
 function productArrive() {
 	now= new Date(); //get the current time
-	//check each bomb with a for loop
-	//array length: number of items in the global array: myArray
 	for (i=0; i < myArray.length;i++) {	
 		tday=new Date(myArray[i]['expire']); //convert the date string into date object in javascript
 		if (tday <= now) { 
             if(myArray[i]['orderNumber'] != 0)
             {
-			//expired, set the explode image and text
                 $.ajax({
                     url: "json6.php",
                     dataType: 'html',
@@ -134,13 +133,11 @@ function productArrive() {
                         alert('Ajax request failed!');
                     },
                     success: function(txt) { //the call back function when ajax call succeed
-                        //alert("Bomb" + bombID + ": " + txt);
                         //alert(txt);
                         myArray[i]['productStock'] = txt;
                         myArray[i]['orderNumber'] = 0 ;
                         $("#try1").html(txt);
                         location.reload(true);
-                        //$("#productStock"+i).html(txt);
 
                     }
                 });
@@ -149,13 +146,11 @@ function productArrive() {
             else //(tday <= now && myArray[i]['orderNumber'] == 0)
             {
                 $("#timer"+i).html("");
-                //$("#productStock"+i).html("gg");
             } 
         }
         else 
         {
 			//set the bomb image  and calculate count down
-			//$("#bomb" + i).attr('src',"images/bomb.jpg");
 			$("#timer"+i).html(Math.floor((tday-now)/1000))	        
 		}
 	}
@@ -181,12 +176,18 @@ echo "<div id='k1'>0</div><br />";
 echo "<div id='try1'>0</div><br />";
 ?>
 <?php
-    $sql2="select * from store";
+    $sql2="select * from store where userID = '$userID'";//已改
     $storeres=mysqli_query($conn,$sql2) or die("db error");
     $storeArr = array(); //define an array for bombs
     while($roow=mysqli_fetch_assoc($storeres)) {
         $storeArr[] = $roow;
     }//store the row into the array    
+?>
+<?php
+    $sql4="select sum(money) from store where userID = '$userID'";
+    $storemoney=mysqli_query($conn,$sql4) or die("db error");//define an array for bombs
+    $money=mysqli_fetch_assoc($storemoney);
+        //store the row into the array    
 ?>
 <TABLE BGCOLOR=yellow  BORDER CELLPADDING="8"
        CELLSPACING="4" COLS="3">
@@ -206,7 +207,7 @@ if ($result) {
        CELLSPACING="4" COLS="3">
 <?php
 $i=0; //counter for products
-$sql="select * from headerquarter"; 
+$sql="select * from headerquarter where userID = '$userID'"; //已改
 $res=mysqli_query($conn,$sql) or die("db error");
 $arr = array(); //define an array for bombs
 while($row=mysqli_fetch_assoc($res)) {
@@ -216,12 +217,12 @@ while($row=mysqli_fetch_assoc($res)) {
     echo "<td><div id='timer$i'>0</div></td>";
     echo "<td><div id='ProductStock$i'>".$row['productStock']."</div></td></tr>";*/
     echo "<tr><td><button onclick='orderStock($i)'\"><img src= 'images/$productName.png' id='product$i'></button><div ></div></td><br />";
-    echo "<td><div id='timer$i'>0</div></td>";
+    echo "<td><div id='timer$i'></div></td>";
     echo "<td><div id='ProductStock$i'>".$row['productStock']."</div></td></tr>";
     $i++; //increase counter
 }
 echo "<tr><td><img src= 'images/money.jpg' ></td><br />";
-echo"<td><p id ='moneySum' >0</p></td></tr>";
+echo"<td><p id ='moneySum' >".$money['sum(money)']."</p></td></tr>";
 ?>
 </TABLE>
 

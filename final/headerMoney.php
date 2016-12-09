@@ -1,6 +1,8 @@
 <?php 
 require "dbconnect.php";
 header('Content-Type: application/json');
+session_start();
+$userID = $_SESSION['uID'];
 $productID=(int)$_POST["productID"];
 $storeID = $_POST["storeID"];
 $productSum = $_POST["productSum"];
@@ -14,17 +16,17 @@ $price=$row['price'];
 switch($productID)
 {
     case 1 :
-        $sql="update store set productSum1 = $productSum,money = money +($price * $randomNumber) where store.storeID=$storeID";
+        $sql="update store set productSum1 = $productSum,money = money +($price * $randomNumber) where store.storeID=$storeID and userID = '$userID'";
         break;
     case 2:
-        $sql="update store set productSum2 = $productSum,money = money +($price * $randomNumber) where store.storeID=$storeID";
+        $sql="update store set productSum2 = $productSum,money = money +($price * $randomNumber) where store.storeID=$storeID and userID = '$userID'";
         break;
     case 3 :
-        $sql="update store set productSum3 = $productSum,money = money +($price * $randomNumber) where store.storeID=$storeID";
+        $sql="update store set productSum3 = $productSum,money = money +($price * $randomNumber) where store.storeID=$storeID and userID = '$userID'";
         break;
     default:
 }
-$sql3 = "select sum(money) from store";
+$sql3 = "select sum(money) from store where userID = '$userID'";
 $result = mysqli_query($conn,$sql3);
 $row=mysqli_fetch_assoc($result);
 $res=mysqli_query($conn,$sql) or die("db error");

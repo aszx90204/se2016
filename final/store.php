@@ -1,6 +1,8 @@
 <?php
     require("dbconnect.php");
     global $conn;
+    session_start();
+    $userID = $_SESSION['uID'];
     $storeID = $_GET['storeID'];
     $sql = "select * from store where store.storeID = $storeID ";  
     $result= mysqli_query($conn,$sql);
@@ -15,7 +17,7 @@
     $productLimit2 = $rs["productLimit2"];
     $productLimit3 = $rs["productLimit3"];
     date_default_timezone_set("Asia/Taipei");
-    $sql = "select * from headerquarter ";///******************************要加使用者  
+    $sql = "select * from headerquarter where userID = '$userID'";///******************************要加使用者  
     $result= mysqli_query($conn,$sql);
     $rs=mysqli_fetch_assoc($result);
  ?>
@@ -101,7 +103,8 @@ function randomPrice()
                 alert('Ajax request failed!');
             },
             success: function(txt) { //the call back function when ajax call succeed                         
-                alert(productName+":"+txt);          
+                //alert(productName+":"+txt);      
+                $("#productPrice"+i).html(txt);
             }
         });   
     }
@@ -310,7 +313,7 @@ function orderNumber(productID,storeID)
         }
     }
 }
-function checkHead(productID,storeID,number)//****************家使用者
+function checkHead(productID,storeID,number)//已改
 {
     var successTxt;
     $.ajax({
@@ -392,6 +395,7 @@ echo "<div id='try1'>0</div><br />";
   <tr>
     <td>產品名稱</td>
     <td>產品庫存</td>
+    <td>產品價格</td>
   </tr>
 <?php
 $i=1; //counter for products
@@ -413,15 +417,18 @@ while($row=mysqli_fetch_assoc($res)) {
         {
             case 1:
                 echo "<tr><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName1.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td></tr>";
+                echo"<td><p id ='productSum$i' >0</p></td>";
+                echo"<td><p id ='productPrice$i' >0</p></td></tr>";
                 break;
             case 2 :
                 echo "<tr><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName2.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td></tr>";
+                echo"<td><p id ='productSum$i' >0</p></td>";
+                echo"<td><p id ='productPrice$i' >0</p></td></tr>";
                 break;               
             case 3 :
                 echo "<tr><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName3.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td></tr>";
+                echo"<td><p id ='productSum$i' >0</p></td>";
+                echo"<td><p id ='productPrice$i' >0</p></td></tr>";
                 break;
             default:
         }

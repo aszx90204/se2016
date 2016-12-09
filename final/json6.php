@@ -1,6 +1,8 @@
 <?php 
 date_default_timezone_set("Asia/Taipei");
 require "dbconnect.php";
+session_start();
+$userID = $_SESSION['uID'];
 $orderNumber = $_POST["orderNumber"];
 $productName =$_POST["productName"];
 $productStock = $_POST["productStock"];
@@ -13,7 +15,7 @@ $result = mysqli_query($conn,$sql);
 $row=mysqli_fetch_assoc($result);
 $productStock = $row['productStock'];*/
 //$stockSum  = $productStock+$orderNumber;
-$sql = "update headerquarter set orderNumber = 0,productStock = $productStock+$orderNumber where productName ='$productName'";
+$sql = "update headerquarter set orderNumber = 0,productStock = $productStock+$orderNumber where productName ='$productName' and userID = '$userID'";
 $res=mysqli_query($conn,$sql) or die("db error");
 echo ($productStock+$orderNumber);//newD;
 ?>
