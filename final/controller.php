@@ -67,29 +67,23 @@ switch($act) {
         }
         break;
     }*/
-    /*case "register":   
-        $loginID= $_POST['id'];
+    case "register":   
+        $userID= $_POST['id'];
         $password = $_POST['pwd'];
-        $Name = $_POST['Name'];
-        $iswork = $_POST['iswork'];
-        $skill = $_POST['skill'];
-        (int)$salary= $_POST['salary'];
-        $employee= $_POST['employee'];
         $password2 = $_POST['pwd2'];
-        if(register($loginID,$password,$Name,$iswork,$skill,$salary,$employee) && $password==$password2)
+        if($password===$password2)
         {
-            echo( "OK");
+            if(register($userID,$password))
+            {
+                echo( "OK");
+                headerregister($userID);
+            }
         }
         else
         {
-            echo( "register not ok</br>");
-            if($password != $password2)
-            {
-                echo( "密碼不相等");
-            }
-            
+            echo( "密碼不相等");          
         }
-        break;*/
+        break;
 	case "login":
 		$userID = $_POST['id'];
 		$password = $_POST['pwd'];

@@ -17,6 +17,7 @@
     $productLimit2 = $rs["productLimit2"];
     $productLimit3 = $rs["productLimit3"];
     date_default_timezone_set("Asia/Taipei");
+
     $sql = "select * from headerquarter where userID = '$userID'";///******************************要加使用者  
     $result= mysqli_query($conn,$sql);
     $rs=mysqli_fetch_assoc($result);

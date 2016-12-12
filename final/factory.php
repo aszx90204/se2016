@@ -4,6 +4,9 @@ require ("find.php");
 session_start();
 $userID = $_SESSION['uID'];
 $result =showStore($userID); 
+$showStoreNumber = showStoreNumber($userID);
+$storeRow =  mysqli_fetch_assoc($showStoreNumber);
+$storeNum = $storeRow['count(*)'];
 date_default_timezone_set("Asia/Taipei");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -13,9 +16,19 @@ date_default_timezone_set("Asia/Taipei");
 <script type="text/javascript" src="jquery.js"></script>
 <title>總店</title>
 <style type="text/css">
+    html {
+        height: 100%;
+    }
+    body {
+        background-image: url(images/factory.jpg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+    }
 </style>
 <script language="javascript">
-
+var mymoney= 0 ;
 function orderStock(productID) { ///************使用者*******
 	now= new Date(); //get the current time
 	tday=new Date(myArray[productID]['expire']);
@@ -38,7 +51,8 @@ function orderStock(productID) { ///************使用者*******
 				//alert("Bomb" + bombID + ": " + txt);
                 //myArray[productID]['orderNumber'] = data['ordernumber'];
                 myArray[productID]['expire'] = data.expire;
-                myArray[productID]['orderNumber'] = data.orderNumber;   
+                myArray[productID]['orderNumber'] = data.orderNumber; 
+                $("#moneySum").html(data.money);      
 			}
 		});	
 	} else {
@@ -53,6 +67,7 @@ function checkStock()
         $("#productStock"+i).html(productStock);
     }
 }
+
 function checkMoney()//已改
 {
     for(var i = 0;i< storeArray.length;i++)
@@ -105,11 +120,36 @@ function checkMoney()//已改
                     success: function(txt) { //the call back function when ajax call succeed
                         //alert("Bomb" + bombID + ": " + txt);
                         //alert(txt);
-                        $("#moneySum").html(txt);                       
+                        $("#moneySum").html(txt);    
+                        mymoney = txt;
                     }
                 });  
             }
         }
+    }
+}
+function rowMaterialPrice()
+{
+    for(var i = 0 ;i<myArray.length;i++)
+    {
+
+        var productName = myArray[i]['productName'];
+        $.ajax({
+            url: "rowMaterialPrice.php",
+            dataType: 'html',
+            async: false,
+            type: 'POST',
+            data: { 
+                productName : productName                               
+            }, //optional, you can send field1=10, field2='abc' to URL by this
+            error: function(response) { //the call back function when ajax call fails
+                alert('Ajax request failed!');
+            },
+            success: function(txt) { //the call back function when ajax call succeed                         
+                //alert(productName+":"+txt);      
+                $("#rowMaterialPrice"+i).html(txt);
+            }
+        });   
     }
 }
 function productArrive() {
@@ -155,6 +195,33 @@ function productArrive() {
 		}
 	}
 }
+function open()
+{
+    if(<?php echo $storeNum ?> == 0)
+    {
+        var openCost = 0;
+    }
+    else{
+        var openCost = (5000*(Math.pow(2,<?php echo $storeNum ?>)));   
+    }
+    alert(mymoney);
+    if(mymoney<openCost)
+    {
+        alert("開店資金不夠");
+        return false;
+    }
+    else
+    {
+        if(confirm("開店需要"+openCost+"元,確定要開新店嗎?"))
+        {
+            window.location = 'openStore.php';
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
 window.onload = function () {
 	//check the bomb status every 1 second
     setInterval(function () {
@@ -167,12 +234,17 @@ window.onload = function () {
         //check();
         checkMoney();
     }, 1000);
+    setInterval(function () {
+		//checkBomb()　
+        //check();
+        rowMaterialPrice();
+    }, 10000);
 };
 </script>
 </head>
 <body>
 <?php
-echo "<div id='k1'>0</div><br />";
+echo $storeNum;
 echo "<div id='try1'>0</div><br />";
 ?>
 <?php
@@ -218,11 +290,12 @@ while($row=mysqli_fetch_assoc($res)) {
     echo "<td><div id='ProductStock$i'>".$row['productStock']."</div></td></tr>";*/
     echo "<tr><td><button onclick='orderStock($i)'\"><img src= 'images/$productName.png' id='product$i'></button><div ></div></td><br />";
     echo "<td><div id='timer$i'></div></td>";
+    echo "<td><div id='rowMaterialPrice$i'></div></td>";
     echo "<td><div id='ProductStock$i'>".$row['productStock']."</div></td></tr>";
     $i++; //increase counter
 }
 echo "<tr><td><img src= 'images/money.jpg' ></td><br />";
-echo"<td><p id ='moneySum' >".$money['sum(money)']."</p></td></tr>";
+echo"<td><p id ='moneySum' value ='2000'>".$money['sum(money)']."</p></td></tr>";
 ?>
 </TABLE>
 
@@ -236,8 +309,10 @@ echo"<td><p id ='moneySum' >".$money['sum(money)']."</p></td></tr>";
 <?php
 	//print the bomb array to the web page as a javascript object
 	echo "var storeArray=" . json_encode($storeArr);
+    //<a href="openStore.php" onclick = "return open()">新</a>
 ?>
 </script>
+<A href="javascript:open()">開新店！！！！</A> 
 </body>
 </html>
 
