@@ -41,28 +41,4 @@ function headerregister($userID)
         }     
     }
 }
-function factorymoney($userID)
-{
-    global $conn;
-    $sql= "select sum(money) from store where userID = '$userID'";
-    $result = mysqli_query($conn,$sql);
-    $row=mysqli_fetch_assoc($result);
-    $summoney=$row['sum(money)'];
-    return $summoney;
-}
-function check_input($value)
-{
-// 去除斜杠
-    if (get_magic_quotes_gpc())
-    {
-        $value = stripslashes($value);
-    }
-    // 如果不是数字则加引号
-    if (!is_numeric($value))
-    {
-        $value = "'" . mysql_real_escape_string($value) . "'";
-    }
-    return $value;
-}
-
 ?>
