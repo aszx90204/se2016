@@ -25,7 +25,41 @@
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="jquery.js"></script>
-
+<style>
+.fancytable{border:1px solid #cccccc; width:100%;border-collapse:collapse;}
+.fancytable td{border:1px solid #cccccc; color:#555555;text-align:center;line-height:28px;}
+.headerrow{ background-color:#0066cc;}
+.headerrow td{ color:#ffffff; text-align:center;}
+.datarowodd{background-color:#ffffff;}
+.dataroweven{ background-color:#efefef;}
+.datarowodd td{background-color:#ffffff;}
+.dataroweven td{ background-color:#efefef;}
+</style>
+		<link rel="stylesheet" type="text/css" media="screen" href="http://www.gifmania.tw/rec/css/styles.css" />
+		<style type="text/css">
+			body {
+				background-color:#AADFFF;
+				background-image:url('http://www.gifmania.tw/rec/img/fondo_body.png');
+			}
+			#background1 {
+				background-image:url(images/b1.png);
+			}
+			#background2 {
+				background-image:url(images/b2.png);
+			}
+			#background3 {
+				background-image:url(images/b3.png);
+			}
+			#background4 {
+				background-image:url(images/b4.png);
+			}
+            .shief{
+                background-color:#8D9FB3;
+                width:1350px;
+                height:225px;
+                text-align:center;              
+            }
+		</style>
 <script language="javascript">
 
 function handleBomb(bombID) {
@@ -33,8 +67,6 @@ function handleBomb(bombID) {
 	tday=new Date(myArray[bombID]['expire'])
 	console.log(now, tday)
 	if (tday <= now) {
-		//alert('exploded');
-		//use jQuery ajax to reset timer
 		$.ajax({
 			url: "json.php",
 			dataType: 'html',
@@ -55,21 +87,15 @@ function handleBomb(bombID) {
 }
 
 function checkBomb() {
-	now= new Date(); //get the current time
-	
-	//check each bomb with a for loop
-	//array length: number of items in the global array: myArray
+	now= new Date(); //get the current time	
 	for (i=0; i < myArray.length;i++) {	
 		tday=new Date(myArray[i]['expire']); //convert the date string into date object in javascript
 		if (tday <= now) { 
-			//expired, set the explode image and text
 			$("#bomb" + i).attr('src',"images/explode.jpg");
 			$("#timer"+i).html("exploded!")
              $("#k1").html("Dj");
-		} else {
-			//set the bomb image  and calculate count down
+		} else {		
 			$("#bomb" + i).attr('src',"images/bomb.jpg");
-			//$("#timer"+i).html(Math.floor((tday-now)/1000))	;
             $("#timer"+i).html("hey")	
              $("#k1").html("Dj");
 		}
@@ -115,8 +141,6 @@ function productSum()
 	var i;
     $("#try1").html(5);
     $("#k1").html(2);
-	//check each bomb with a for loop
-	//array length: number of items in the global array: myArray
 	for (i=1; i <=3;i++) 
     {	
         //$("#productSum"+i).html(myArray[0]['productSum1']-(Math.floor(Math.random()*4)));
@@ -141,15 +165,12 @@ function productSum()
                                 storeID : myArray[0]['storeID'],//myArray[0]['storeID'],
                                 productSum : nowSum1,
                                 randomNumber : x,
-                                productName : myArray[0]['productName1']
-                                //productorder : productorder,
+                                productName : myArray[0]['productName1']                             
                         }, //optional, you can send field1=10, field2='abc' to URL by this
                         error: function(response) { //the call back function when ajax call fails
                             alert('Ajax request failed!');
                         },
                         success: function(txt) { //the call back function when ajax call succeed
-                            //alert("Bomb" + bombID + ": " + txt);
-                            //alert(txt);
                             $("#moneySum").html(txt);                       
                         }
                     });
@@ -175,14 +196,11 @@ function productSum()
                                 productSum : nowSum2,
                                 randomNumber : x,
                                 productName : myArray[0]['productName2']
-                                //productorder : productorder,
                         }, //optional, you can send field1=10, field2='abc' to URL by this
                         error: function(response) { //the call back function when ajax call fails
                             alert('Ajax request failed!');
                         },
                         success: function(txt) { //the call back function when ajax call succeed
-                            //alert("Bomb" + bombID + ": " + txt);
-                            //alert(txt);
                             $("#moneySum").html(txt);
                         }
                     });
@@ -208,14 +226,11 @@ function productSum()
                                 productSum : nowSum3,
                                 randomNumber : x,
                                 productName : myArray[0]['productName3']
-                                //productorder : productorder,
                         }, //optional, you can send field1=10, field2='abc' to URL by this
                         error: function(response) { //the call back function when ajax call fails
                             alert('Ajax request failed!');
                         },
                         success: function(txt) { //the call back function when ajax call succeed
-                            //alert("Bomb" + bombID + ": " + txt);
-                            //alert(txt);
                             $("#moneySum").html(txt);
                         }
                     });
@@ -241,14 +256,11 @@ function orderProduct(productID,storeID,number)
                     productID :productID,
                     storeID : storeID,//myArray[0]['storeID'],
                     productSum :nowSum1
-                    //productorder : productorder,
                 }, //optional, you can send field1=10, field2='abc' to URL by this
                 error: function(response) { //the call back function when ajax call fails
                     alert('Ajax request failed!');
                 },
                 success: function(txt) { //the call back function when ajax call succeed
-                    //alert("Bomb" + bombID + ": " + txt);
-                    //alert(txt);
                     myArray[0]['productSum1'] = txt;
                 }
             });
@@ -264,14 +276,11 @@ function orderProduct(productID,storeID,number)
                     productID :productID,
                     storeID : storeID,//myArray[0]['storeID'],
                     productSum :nowSum2
-                    //productorder : productorder,
                 }, //optional, you can send field1=10, field2='abc' to URL by this
                 error: function(response) { //the call back function when ajax call fails
                     alert('Ajax request failed!');
                 },
                 success: function(txt) { //the call back function when ajax call succeed
-                    //alert("Bomb" + bombID + ": " + txt);
-                    //alert(txt);
                     myArray[0]['productSum2'] = txt;
                 }
             });
@@ -287,14 +296,11 @@ function orderProduct(productID,storeID,number)
                     productID :productID,
                     storeID : storeID,//myArray[0]['storeID'],
                     productSum :nowSum3
-                    //productorder : productorder,
                 }, //optional, you can send field1=10, field2='abc' to URL by this
                 error: function(response) { //the call back function when ajax call fails
                     alert('Ajax request failed!');
                 },
                 success: function(txt) { //the call back function when ajax call succeed
-                    //alert("Bomb" + bombID + ": " + txt);
-                    //alert(txt);
                     myArray[0]['productSum3'] = txt;
                 }
             });
@@ -306,12 +312,19 @@ function orderNumber(productID,storeID)
 {
     var number = parseInt(prompt("訂購多少","0"));
     //checkHead(productID,storeID,number);//確認總店庫存夠
-    if(checkNumber(productID,number) == 1)
+    if(number>0)
     {
-        if(checkHead(productID,storeID,number)== 1)//確認沒到達上限
+        if(checkNumber(productID,number) == 1)
         {
-            orderProduct(productID,storeID,number); 
+            if(checkHead(productID,storeID,number)== 1)//確認沒到達上限
+            {
+                orderProduct(productID,storeID,number); 
+            }
         }
+    }
+    else
+    {
+        alert("請輸入正整數");
     }
 }
 function checkHead(productID,storeID,number)//已改
@@ -326,17 +339,14 @@ function checkHead(productID,storeID,number)//已改
             orderNumber : number,
             productID :productID,
             storeID: storeID
-            //productorder : productorder,
-        }, //optional, you can send field1=10, field2='abc' to URL by this
-        error: function(response) { //the call back function when ajax call fails
+        }, 
+        error: function(response) { 
             //alert(txt);
             alert(response);
         },
-        success: function(txt) { //the call back function when ajax call succeed
-            //alert("Bomb" + bombID + ": " + txt);
+        success: function(txt) {
             alert(txt);
             successTxt = txt;
-            //myArray[0]['productSum3'] = txt;    
         }
     });    
     if(successTxt =='訂購成功')
@@ -370,78 +380,69 @@ function checkNumber(productID,number)
         return 1;
     }
 }
-//javascript, to set the timer on windows load event
 window.onload = function () {
-	//check the bomb status every 1 second
     setInterval(function () {
-		//checkBomb()　
-        //check();
         productSum();
     }, 1000);
     setInterval(function () {
-		//checkBomb()　
-        //check();
         randomPrice();
     }, 10000);
 };
 </script>
 </head>
-<body >
-<div id='headerquarter'><a href = 'factory.php'>總店</a></div><br/>
-<?php
-echo "<div id='k1'>0</div><br />";
-echo "<div id='try1'>0</div><br />";
-?>
- <table border=4 align=center width=60%  cellspacing=5 cellpadding=6>
-  <tr>
+<body  onload = "randomPrice()">
+		<div id="background">
+			<div id="background1"></div>
+			<div id="background2"></div>
+			<div id="background3"></div>
+			<div id="background4"></div>
+		</div>
+<div id='headerquarter'><a href = 'factory.php'><img src = "images/mark.png"></a></div><br/>
+ <table border=4 align=center width=60%  cellspacing=0 cellpadding=0 class = "facnytable"> 
+  <tr class ="headerrow">
     <td>產品名稱</td>
     <td>產品庫存</td>
     <td>產品價格</td>
   </tr>
 <?php
-$i=1; //counter for products
-$sql="select * from store where store.storeID =$storeID "; //select all bomb information from DB
+$i=1; 
+$sql="select * from store where store.storeID =$storeID ";
 $res=mysqli_query($conn,$sql) or die("db error");
-$arr = array(); //define an array for bombs
+$arr = array(); 
 while($row=mysqli_fetch_assoc($res)) {
-	$arr[] = $row; //store the row into the array
-	//generate the image tag, the div tag for timer text. Note on the use of $i in tag ID
+	$arr[] = $row; 
     $storeID = $row['storeID'];
     for($i;$i<=3;$i++)
     {
         $productID = "$i";
-        //echo '<div class="logo"><a href="http://www.example.com/" onClick="_gaq.push([\'_trackEvent\', \'Join\', \'Home\', \'BigButton\']);">Link Text</a>';
-        //echo "<tr><td><img src='images/cake.png' id='product$i' onclick='location.href ='orderProduct.php?productID = {$productID }?storeID = {$storeID}''</td><br />";
-        //!!!!    echo "<tr><td><button onclick=\"self.location.href='orderProduct.php?productID={$productID}&storeID={$storeID}'\"><img src= 'images/cake.png' id='product$i'></button><div ></div></td><br />";
-        //echo "<td><div id =\"productSum$i\"  ></div>", $rs["productSum$i"],"</td></tr>";
         switch($i)
         {
             case 1:
-                echo "<tr><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName1.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td>";
+                echo "<tr class=\"dataroweven\"><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName1.png' id='product$i'></button><div ></div></td><br />";
+                echo"<td><p id ='productSum$i' >0</p>/$productLimit1</td>";
                 echo"<td><p id ='productPrice$i' >0</p></td></tr>";
                 break;
             case 2 :
-                echo "<tr><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName2.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td>";
+                echo "<tr class =\"datarowodd\"><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName2.png' id='product$i'></button><div ></div></td><br />";
+                echo"<td><p id ='productSum$i' >0</p>/$productLimit2</td>";
                 echo"<td><p id ='productPrice$i' >0</p></td></tr>";
                 break;               
             case 3 :
-                echo "<tr><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName3.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td>";
+                echo "<tr class=\"dataroweven\"><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName3.png' id='product$i'></button><div ></div></td><br />";
+                echo"<td><p id ='productSum$i' >0</p>/$productLimit3</td>";
                 echo"<td><p id ='productPrice$i' >0</p></td></tr>";
                 break;
             default:
         }
 	}
-    echo "<tr><td><img src= 'images/money.jpg' ></td><br />";
+    echo "<tr class =\"datarowodd\"><td><img src= 'images/money.jpg' ></td><br />";
     echo"<td><p id ='moneySum' >0</p></td></tr>";
 }
 ?>
 <!--</table>-->
 <script>
 <?php
-	//print the bomb array to the web page as a javascript object
+	
 	echo "var myArray=" . json_encode($arr);
 ?>
 </script>

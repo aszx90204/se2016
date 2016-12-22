@@ -46,16 +46,10 @@ function check() {
 <h1>恭喜分店開張<h1>
 <p>請選擇3個要販售的產品</p>
 <form onsubmit="return check()" method="post" action="open.php"> 
-<!--<input name="s1" type=checkbox onclick="return count(this)"> A 
-<input name="s2" type=checkbox onclick="return count(this)"> B 
-<input name="s3" type=checkbox onclick="return count(this)"> C 
-<input name="s4" type=checkbox onclick="return count(this)"> D 
-<input type="submit">您勾了 <span id="t1">0</span> 項 -->
 <?php
     while($row=mysqli_fetch_assoc($result))
     {   $productName = $row['productName'];
         echo"<input name='product[]' type=checkbox onclick='return count(this)' value ={$row['productName']}><img src= 'images/$productName.png'>{$row['productName']}</br>";
-        //echo "{$row['productName']}";
     }
     echo" 店名:<input name='Name' type='text' id='Name'><br>"
 ?>

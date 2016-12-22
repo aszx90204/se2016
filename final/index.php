@@ -6,7 +6,6 @@ if (! isset($_SESSION["uID"]))
 //echo $_SESSION["uID"];
 if ( $_SESSION["uID"] < " ") {
 	//header("Location: login.php");
-	echo "Please Login. <a href='loginForm.php'>Login</a>";
-	exit(0);
+    header("Location: loginForm.php");
 }
 ?>
