@@ -36,49 +36,78 @@ date_default_timezone_set("Asia/Taipei");
 			}
             .shief{
                 background-color:#8D9FB3;
-                width:1350px;
+                width:100%;
                 height:225px;
                 text-align:center;
                 
+            }
+			a {
+	            color:#800000;
+				font-weight:bold;
             }
 		</style>
 		
 <script language="javascript">
 var mymoney= <?php echo $factorymoney ?> ;
 function orderStock(productID) { ///************使用者*******
+    var msg ; 
 	now= new Date(); //get the current time
 	tday=new Date(myArray[productID]['expire']);
 	console.log(now, tday);
 	if (tday <= now ) {
 		//alert('exploded');
 		//use jQuery ajax to reset timer
-        var number = parseInt(prompt("訂購多少","0"));     
-        if(number > 0)
+        var number = parseInt(prompt("訂購多少","0"));   
+        if(number>0)
         {
             $.ajax({
-                url: "json5.php",
-                dataType:'json',
+                url: "json7.php",
+                dataType:'html',
                 type: 'POST',
+                async: false,
                 data: {
                     orderNumber : number,
                     productName : myArray[productID]['productName']}, //optional, you can send field1=10, field2='abc' to URL by this
                 error: function(response) { //the call back function when ajax call fails
                     alert('Ajax request failed!');
                 },
-                success: function(data) { //the call back function when ajax call succeed
-                    myArray[productID]['expire'] = data.expire;
-                    myArray[productID]['orderNumber'] = data.orderNumber; 
-                    $("#moneySum").html(data.money);      
+                success: function(txt) { //the call back function when ajax call succeed    
+                    msg = txt;
                 }
             });
-        }else
+            if(msg =="OK")
+            {
+                $.ajax({
+                    url: "json5.php",
+                    dataType:'json',
+                    type: 'POST',
+                    data: {
+                        orderNumber : number,
+                        productName : myArray[productID]['productName']}, //optional, you can send field1=10, field2='abc' to URL by this
+                    error: function(response) { //the call back function when ajax call fails
+                        alert('Ajax request failed!');
+                    },
+                    success: function(data) { //the call back function when ajax call succeed
+                        myArray[productID]['expire'] = data.expire;
+                        myArray[productID]['orderNumber'] = data.orderNumber; 
+                        $("#moneySum").html(data.money);      
+                    }
+                });       
+            }
+            else
+            {
+                alert("錢不夠QQ");
+            }
+        }
+        else
         {
             alert("輸入正整數");
         }
-        
-	} else {
-		alert("商品即將抵達");
-	}
+    } 
+    else
+    {
+        alert("商品即將抵達");
+    }
 }
 function checkStock()
 {
@@ -220,7 +249,7 @@ function open()
         var openCost = 0;
     }
     else{
-        var openCost = (5000*(Math.pow(2,<?php echo $storeNum ?>)));   
+        var openCost = (5000*(Math.pow(2,<?php echo $storeNum-1 ?>)));   
     }
     if(mymoney<openCost)
     {
@@ -267,7 +296,7 @@ window.onload = function () {
 			<div id="background4"></div>
 		</div>
         <div class ="shief">
-            <a href = "loginForm.php"><img src = "images/shief.gif"></a>
+            <a href = "loginForm.php"><img src = "images/shief.gif"  title="登出"></a>
         </div>
 <?php
     $sql2="select * from store where userID = '$userID'";//已改
@@ -283,13 +312,12 @@ window.onload = function () {
     $money=mysqli_fetch_assoc($storemoney);
         //store the row into the array    
 ?>
-<TABLE CELLPADDING="4" align=center
-       CELLSPACING="4" COLS="3">
+<TABLE CELLPADDING="4" align="center" CELLSPACING="4" COLS="3">
 <?php
 if ($result) {  
 	while (	$rs=mysqli_fetch_assoc($result)) {
 		//echo "<td>" . $rs['name'] . "</td>";
-        echo"<td><a href='store.php?storeID={$rs['storeID']}'><img src = 'images/store.jpg'>".$rs['name']."</a></td>";   
+        echo"<td><a href='store.php?storeID={$rs['storeID']}'><img src = 'images/store.png' title = '進入分店'><br \> <p align='center'>".$rs['name']."</p></a></td>";   
 	}
     echo"<td><A href='javascript:open()'>開新店！！！！</A></td>";
 } else {
@@ -299,13 +327,13 @@ if ($result) {
 </TABLE>
 <!--*******************************************-->
 <div id ="productTable">
-<table align=center width=60%   bgcolor="#DAA569">
+<table align=center width=60%   bgcolor="#DAA569" border="inset" style = "margin: 0px auto 100px;">
       <!-- CELLSPACING="4" COLS="3" BORDER CELLPADDING="0">-->
     <tr>
         <td></td>
-        <td><img src= 'images/clock.gif'></td>
-        <td><img src= 'images/money.png'></td>
-        <td><img src= 'images/bread_pretzel_resized.png'></td>
+        <td align='center'><img src= 'images/clock.gif'></td>
+        <td align='center'><img src= 'images/money.png'></td>
+        <td align='center'><img src= 'images/bread_pretzel_resized.png'></td>
     </tr>
 <?php
 $i=0; //counter for products
@@ -315,14 +343,14 @@ $arr = array(); //define an array for bombs
 while($row=mysqli_fetch_assoc($res)) {
 	$arr[] = $row; //store the row into the array	
     $productName = $row['productName'];       
-    echo "<tr><td ><button onclick='orderStock($i)'\"><img src= 'images/$productName.png' id='product$i'></button><div ></div></td><br />";
-    echo "<td align=\"center\"><div id='timer$i'></div></td>";
-    echo "<td align=\"center\"><div id='rowMaterialPrice$i'></div></td>";
-    echo "<td align=\"center\"><div id='ProductStock$i'>".$row['productStock']."</div></td></tr>";
+    echo "<tr><td align='center'><button onclick='orderStock($i)'  title='訂購' style='width:200px;height:100px;'><img src= 'images/$productName.png' id='product$i' style='max-height:100px;'></button></td><br />";
+    echo "<td align='center'><div id='timer$i'></div></td>";
+    echo "<td align='center'><div id='rowMaterialPrice$i'></div></td>";
+    echo "<td align='center'><div id='ProductStock$i'>".$row['productStock']."</div></td></tr>";
     $i++; //increase counter
 }
-echo "<tr><td><img src= 'images/111.gif' ></td><br />";
-echo"<td><p id ='moneySum' value ='2000'>".$money['sum(money)']."</p></td></tr>";
+echo "<tr><td align='center'><img src= 'images/111.gif' ></td><br />";
+echo"<td colspan='3' align='center'><p id ='moneySum' value ='2000'>".$money['sum(money)']."</p></td></tr>";
 ?>
 </TABLE>
 </div> 
@@ -336,7 +364,7 @@ echo"<td><p id ='moneySum' value ='2000'>".$money['sum(money)']."</p></td></tr>"
 	echo "var storeArray=" . json_encode($storeArr);
 ?>
 </script>
-<A href="javascript:open()">開新店！！！！</A>
+<!--<A href="javascript:open()">開新店！！！！</A>-->
 </div>
 </body>
 </html>

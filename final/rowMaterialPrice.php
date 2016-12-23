@@ -11,4 +11,5 @@ $price = rand($lowPrice,$highPrice);
 $sql2 = "update rowmaterial set nowPrice = $price where rowMaterialName = '$productName'";
 //echo $sql; //newD;
 mysqli_query($conn,$sql2)or die("db error");
-echo $price;
+echo $price."元";
+?>

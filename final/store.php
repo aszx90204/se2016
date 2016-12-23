@@ -397,12 +397,8 @@ window.onload = function () {
 			<div id="background3"></div>
 			<div id="background4"></div>
 		</div>
-<div id='headerquarter'><a href = 'factory.php'><img src = "images/mark.png"></a></div><br/>
-<?php
-echo "<div id='k1'>0</div><br />";
-echo "<div id='try1'>0</div><br />";
-?>
- <table border=4 align=center width=60%  cellspacing=0 cellpadding=0 class = "facnytable"> 
+<div id='headerquarter'><a href = 'factory.php'><img src = "images/mark.png" title = "back"></a></div><br/>
+ <table border=4 align=center width=60%  cellspacing=0 cellpadding=0 class = "facnytable" style = "margin: 0px auto 100px;"> 
   <tr class ="headerrow">
     <td>產品名稱</td>
     <td>產品庫存</td>
@@ -422,25 +418,25 @@ while($row=mysqli_fetch_assoc($res)) {
         switch($i)
         {
             case 1:
-                echo "<tr class=\"dataroweven\"><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName1.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td>";
-                echo"<td><p id ='productPrice$i' >0</p></td></tr>";
+                echo "<tr class=\"dataroweven\"><td align='center'><button onclick='orderNumber($productID,$storeID)' style='width:200px;height:100px;'><img src= 'images/$productName1.png' id='product$i' title='訂購' style='max-height:100px;'></button></td><br />";
+                echo"<td align='center'><p id ='productSum$i' >0</p>/$productLimit1</td>";
+                echo"<td align='center'><p id ='productPrice$i' >0</p></td></tr>";
                 break;
             case 2 :
-                echo "<tr class =\"datarowodd\"><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName2.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td>";
-                echo"<td><p id ='productPrice$i' >0</p></td></tr>";
+                echo "<tr class =\"datarowodd\"><td align='center'><button onclick='orderNumber($productID,$storeID)' style='width:200px;height:100px;'><img src= 'images/$productName2.png' id='product$i' title='訂購' style='max-height:100px;'></button></td><br />";
+                echo"<td align='center'><p id ='productSum$i' >0</p>/$productLimit2</td>";
+                echo"<td align='center'><p id ='productPrice$i' >0</p></td></tr>";
                 break;               
             case 3 :
-                echo "<tr class=\"dataroweven\"><td><button onclick='orderNumber($productID,$storeID)'\"><img src= 'images/$productName3.png' id='product$i'></button><div ></div></td><br />";
-                echo"<td><p id ='productSum$i' >0</p></td>";
-                echo"<td><p id ='productPrice$i' >0</p></td></tr>";
+                echo "<tr class=\"dataroweven\"><td align='center'><button onclick='orderNumber($productID,$storeID)' style='width:200px;height:100px;'><img src= 'images/$productName3.png' id='product$i' title='訂購' style='max-height:100px;'></button></td><br />";
+                echo"<td align='center'><p id ='productSum$i' >0</p>/$productLimit3</td>";
+                echo"<td align='center'><p id ='productPrice$i' >0</p></td></tr>";
                 break;
             default:
         }
 	}
-    echo "<tr class =\"datarowodd\"><td><img src= 'images/money.jpg' ></td><br />";
-    echo"<td><p id ='moneySum' >0</p></td></tr>";
+    echo "<tr class =\"datarowodd\"><td align='center'><img src= 'images/money.jpg' style='width:200px;height:200px;'></td><br />";
+    echo"<td align='center' colspan='2'><p id ='moneySum' >0</p></td></tr>";
 }
 ?>
 <!--</table>-->

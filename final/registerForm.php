@@ -21,14 +21,16 @@ require("dbconnect.php");
 </style >
 </head>
 <body>
-<div style="position:absolute;width:500px;height:200px;top:225px;right:320px" ><font color="ivory">
+<div style="position:absolute;width:500px;height:200px;top:225px;right:350px" ><font color="ivory">
 <h1>Register Form</h1>
 <form method="post" action="controller.php">
     <input type="hidden" name="act" value="register">
-    User Name: <input type="text" name="id" ,id = "id"><br />
-    Password : <input type="password" name="pwd",id = "pwd"><br />
-    Password確認 : <input type="password" name="pwd2",id = "pwd2"><br />
-    <input type="submit" name="Submit" value="註冊" />
+	<table height="125px">
+    <tr><td><font color="ivory">User Name: </td><td><input type="text" name="id" ,id = "id"></td></tr>
+    <tr><td><font color="ivory">Password : </td><td><input type="password" name="pwd",id = "pwd"></td></tr>
+    <tr><td><font color="ivory">Password確認 : </td><td><input type="password" name="pwd2",id = "pwd2"></td></tr>
+    <tr><td><input type="submit" name="Submit" value="註冊" /></td></tr>
+	</table>
 </form>
 </div>
 </body></html>

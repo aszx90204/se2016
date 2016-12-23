@@ -74,8 +74,11 @@ switch($act) {
             if(register($userID,$password))
             {
                 echo( "OK");
-                headerregister($userID);
-                header("Location: loginForm.php");
+                if(headerregister($userID));
+                {
+                    $_SESSION['uID'] = $userID;
+                    header("Location: openStore.php");
+                }
             }
         }
         else

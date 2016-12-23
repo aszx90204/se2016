@@ -28,14 +28,22 @@ $_SESSION['uID'] = "";
 <body >
 <div style="position:absolute;width:500px;height:200px;top:200px;right:400px" >
 <form method="post" action="controller.php">
-<h1 font color = "blue"><font color="ivory">Login Form</h1><hr />
+<h1><font color="ivory">Login Form</h1><hr />
 <input type="hidden" name="act" value="login">
-User Name: <input type="text" name="id"><br />
-</br>
-Password : <input type="password" name="pwd"><br />
-</br>
-<input type="submit">&nbsp;
-<a href="registerForm.php"><input type="text" name ="register" id = "register" value = "註冊" ></a>
+<table height="125px">
+<tr>
+<td><font color="ivory">User Name: </td>
+<td><input type="text" name="id"></td>
+</tr>
+<tr>
+<td><font color="ivory">Password : </td>
+<td><input type="password" name="pwd"></td>
+</tr>
+<tr>
+<td><input type="submit" value="登入"></td>
+<td><a href="registerForm.php"><input type="button" name ="register" id = "register" value = "註冊" ></a></td>
+</tr>
+</table>
 </form>
 </div>
 </body></html>

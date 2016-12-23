@@ -40,6 +40,7 @@ function headerregister($userID)
             default:
         }     
     }
+    return true;
 }
 function factorymoney($userID)
 {
