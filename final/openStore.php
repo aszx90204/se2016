@@ -74,6 +74,7 @@ function check() {
 <br />
 <p style='text-align:center; font-size:20px'>請選擇3個要販售的產品</p>
 <form onsubmit="return check()" method="post" action="open.php"> 
+<<<<<<< HEAD
  <table  align=center width=40%   bgcolor="#DAA569" border="inset"> 
  <tr>
     <td align='center'>產品</td>
@@ -83,6 +84,12 @@ function check() {
     while($row=mysqli_fetch_assoc($result))
     {   $productName = $row['productName'];
         echo"<tr><td align='center'><input name='product[]' type=checkbox onclick='return count(this)' value ={$row['productName']}><img src= 'images/$productName.png 'style='max-height:150px;'></td><td align='center'>{$row['productName']}</td></tr>";
+=======
+<?php
+    while($row=mysqli_fetch_assoc($result))
+    {   $productName = $row['productName'];
+        echo"<input name='product[]' type=checkbox onclick='return count(this)' value ={$row['productName']}><img src= 'images/$productName.png'>{$row['productName']}</br>";
+>>>>>>> origin/master
     }
 ?>
 </table>

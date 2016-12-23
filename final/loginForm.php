@@ -28,6 +28,7 @@ $_SESSION['uID'] = "";
 <body >
 <div style="position:absolute;width:500px;height:200px;top:200px;right:400px" >
 <form method="post" action="controller.php">
+<<<<<<< HEAD
 <h1><font color="ivory">Login Form</h1><hr />
 <input type="hidden" name="act" value="login">
 <table height="125px">
@@ -44,6 +45,16 @@ $_SESSION['uID'] = "";
 <td><a href="registerForm.php"><input type="button" name ="register" id = "register" value = "註冊" ></a></td>
 </tr>
 </table>
+=======
+<h1 font color = "blue"><font color="ivory">Login Form</h1><hr />
+<input type="hidden" name="act" value="login">
+User Name: <input type="text" name="id"><br />
+</br>
+Password : <input type="password" name="pwd"><br />
+</br>
+<input type="submit">&nbsp;
+<a href="registerForm.php"><input type="text" name ="register" id = "register" value = "註冊" ></a>
+>>>>>>> origin/master
 </form>
 </div>
 </body></html>
