@@ -66,9 +66,9 @@ switch($act) {
 		}
 		break;
     case "register":   
-        $userID= mysql_real_escape_string($_POST['id']);
-        $password = mysql_real_escape_string($_POST['pwd']);
-        $password2 = mysql_real_escape_string($_POST['pwd2']);
+        $userID= $_POST['id'];
+        $password = $_POST['pwd'];
+        $password2 = $_POST['pwd2'];
         if($password===$password2)
         {
             if(register($userID,$password))

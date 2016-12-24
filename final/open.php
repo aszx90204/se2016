@@ -4,7 +4,7 @@ require ("find.php");
 session_start();
 $userID = $_SESSION['uID'];
 $product = $_POST ['product'];
-$name = mysql_real_escape_string($_POST ['Name']);
+$name = $_POST ['Name'];
 $showStoreNumber = showStoreNumber($userID);
 $storeRow =  mysqli_fetch_assoc($showStoreNumber);
 $storeNum = $storeRow['count(*)'];

@@ -36,22 +36,15 @@ date_default_timezone_set("Asia/Taipei");
 			}
             .shief{
                 background-color:#8D9FB3;
-<<<<<<< HEAD
                 width:100%;
-=======
-                width:1350px;
->>>>>>> origin/master
                 height:225px;
                 text-align:center;
                 
             }
-<<<<<<< HEAD
 			a {
 	            color:#800000;
 				font-weight:bold;
             }
-=======
->>>>>>> origin/master
 		</style>
 		
 <script language="javascript">
@@ -303,11 +296,7 @@ window.onload = function () {
 			<div id="background4"></div>
 		</div>
         <div class ="shief">
-<<<<<<< HEAD
             <a href = "loginForm.php"><img src = "images/shief.gif"  title="登出"></a>
-=======
-            <a href = "loginForm.php"><img src = "images/shief.gif"></a>
->>>>>>> origin/master
         </div>
 <?php
     $sql2="select * from store where userID = '$userID'";//已改
@@ -323,21 +312,12 @@ window.onload = function () {
     $money=mysqli_fetch_assoc($storemoney);
         //store the row into the array    
 ?>
-<<<<<<< HEAD
 <TABLE CELLPADDING="4" align="center" CELLSPACING="4" COLS="3">
-=======
-<TABLE CELLPADDING="4" align=center
-       CELLSPACING="4" COLS="3">
->>>>>>> origin/master
 <?php
 if ($result) {  
 	while (	$rs=mysqli_fetch_assoc($result)) {
 		//echo "<td>" . $rs['name'] . "</td>";
-<<<<<<< HEAD
         echo"<td><a href='store.php?storeID={$rs['storeID']}'><img src = 'images/store.png' title = '進入分店'><br \> <p align='center'>".$rs['name']."</p></a></td>";   
-=======
-        echo"<td><a href='store.php?storeID={$rs['storeID']}'><img src = 'images/store.jpg'>".$rs['name']."</a></td>";   
->>>>>>> origin/master
 	}
     echo"<td><A href='javascript:open()'>開新店！！！！</A></td>";
 } else {
@@ -347,7 +327,6 @@ if ($result) {
 </TABLE>
 <!--*******************************************-->
 <div id ="productTable">
-<<<<<<< HEAD
 <table align=center width=60%   bgcolor="#DAA569" border="inset" style = "margin: 0px auto 100px;">
       <!-- CELLSPACING="4" COLS="3" BORDER CELLPADDING="0">-->
     <tr>
@@ -355,15 +334,6 @@ if ($result) {
         <td align='center'><img src= 'images/clock.gif'></td>
         <td align='center'><img src= 'images/money.png'></td>
         <td align='center'><img src= 'images/bread_pretzel_resized.png'></td>
-=======
-<table align=center width=60%   bgcolor="#DAA569">
-      <!-- CELLSPACING="4" COLS="3" BORDER CELLPADDING="0">-->
-    <tr>
-        <td></td>
-        <td><img src= 'images/clock.gif'></td>
-        <td><img src= 'images/money.png'></td>
-        <td><img src= 'images/bread_pretzel_resized.png'></td>
->>>>>>> origin/master
     </tr>
 <?php
 $i=0; //counter for products
@@ -373,7 +343,6 @@ $arr = array(); //define an array for bombs
 while($row=mysqli_fetch_assoc($res)) {
 	$arr[] = $row; //store the row into the array	
     $productName = $row['productName'];       
-<<<<<<< HEAD
     echo "<tr><td align='center'><button onclick='orderStock($i)'  title='訂購' style='width:200px;height:100px;'><img src= 'images/$productName.png' id='product$i' style='max-height:100px;'></button></td><br />";
     echo "<td align='center'><div id='timer$i'></div></td>";
     echo "<td align='center'><div id='rowMaterialPrice$i'></div></td>";
@@ -382,16 +351,6 @@ while($row=mysqli_fetch_assoc($res)) {
 }
 echo "<tr><td align='center'><img src= 'images/111.gif' ></td><br />";
 echo"<td colspan='3' align='center'><p id ='moneySum' value ='2000'>".$money['sum(money)']."</p></td></tr>";
-=======
-    echo "<tr><td ><button onclick='orderStock($i)'\"><img src= 'images/$productName.png' id='product$i'></button><div ></div></td><br />";
-    echo "<td align=\"center\"><div id='timer$i'></div></td>";
-    echo "<td align=\"center\"><div id='rowMaterialPrice$i'></div></td>";
-    echo "<td align=\"center\"><div id='ProductStock$i'>".$row['productStock']."</div></td></tr>";
-    $i++; //increase counter
-}
-echo "<tr><td><img src= 'images/111.gif' ></td><br />";
-echo"<td><p id ='moneySum' value ='2000'>".$money['sum(money)']."</p></td></tr>";
->>>>>>> origin/master
 ?>
 </TABLE>
 </div> 
@@ -405,11 +364,7 @@ echo"<td><p id ='moneySum' value ='2000'>".$money['sum(money)']."</p></td></tr>"
 	echo "var storeArray=" . json_encode($storeArr);
 ?>
 </script>
-<<<<<<< HEAD
 <!--<A href="javascript:open()">開新店！！！！</A>-->
-=======
-<A href="javascript:open()">開新店！！！！</A>
->>>>>>> origin/master
 </div>
 </body>
 </html>
